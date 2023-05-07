@@ -16,6 +16,6 @@ def path_direction(url_request, path):
     response = requests.get(url_request)
     response.raise_for_status()
     image =  file_format(response.url)
-    filename = f"{path}/{image['name']}{image['format']}"
+    filename = f"images/{path}/{image['name']}{image['format']}"
     with open(filename, "wb") as file:
         file.write(response.content)
