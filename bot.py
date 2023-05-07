@@ -1,12 +1,33 @@
 from dotenv import load_dotenv
 import telegram
 import os
-from random import choice
+import argparse
+import random
+import time
 
-load_dotenv()
-bot = telegram.Bot(token=os.environ["BOT_TOKEN"])
-print(bot.get_me())
-#bot.send_message(chat_id=os.environ["CHAT_ID"], text="Посмотрите, как прекрасен космос!")
-path = f"images/{choice(os.listdir('images'))}"
-bot.send_document(chat_id=os.environ["CHAT_ID"], document=open(f"{path}/{choice(os.listdir(path))}", "rb"))
+def main():
+    load_dotenv()
+    parser = argparse.ArgumentParser(description="Программа загружает фотографии в телеграм")
+    parser.add_argument("--path", help="Путь к папке, откуда брать изображения. Оставьте пустым, чтобы изображения выбирались случайно")
+    args = parser.parse_args()
+    bot = telegram.Bot(token=os.environ["BOT_TOKEN"])
+    delay = int(os.environ["PUBLICATION_DELAY"]) * 3600
+    while True:
+        if args.path:
+            path = f"images/{args.path}"
+        else:
+            path = f"images/{random.choice(os.listdir('images'))}"
+
+        images = os.listdir(path)
+        random.shuffle(images)
+        for image in images:
+            image = f"{path}/{image}"
+            if os.stat(image).st_size >= 20 * 1024**2:
+                continue
+            bot.send_message(chat_id=os.environ["CHAT_ID"], text="Посмотрите, как прекрасен космос!")
+            bot.send_document(chat_id=os.environ["CHAT_ID"], document=open(image, "rb"))
+            time.sleep(delay)
+
+if __name__ == "__main__":
+    main()
 
