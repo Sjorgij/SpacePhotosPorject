@@ -24,7 +24,8 @@ def main():
             if os.stat(image).st_size >= FILE_MAX_SIZE_IN_BYTES:
                 continue
             bot.send_message(chat_id=chat_id, text="Посмотрите, как прекрасен космос!")
-            bot.send_document(chat_id=chat_id, document=open(image, "rb"))
+            with open(image, "rb") as document:
+                bot.send_document(chat_id=chat_id, document=document)
             time.sleep(delay)
 
 if __name__ == "__main__":
