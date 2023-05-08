@@ -5,6 +5,8 @@ import argparse
 import random
 import time
 
+FILE_MAX_SIZE_IN_BYTES = 20 * 1024**2
+
 def main():
     load_dotenv()
     parser = argparse.ArgumentParser(description="Программа загружает фотографии в телеграм")
@@ -18,7 +20,7 @@ def main():
         random.shuffle(images)
         for image in images:
             image = f"{path}/{image}"
-            if os.stat(image).st_size >= 20 * 1024**2:
+            if os.stat(image).st_size >= FILE_MAX_SIZE_IN_BYTES:
                 continue
             bot.send_message(chat_id=os.environ["CHAT_ID"], text="Посмотрите, как прекрасен космос!")
             bot.send_document(chat_id=os.environ["CHAT_ID"], document=open(image, "rb"))
