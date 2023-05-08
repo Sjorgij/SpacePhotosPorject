@@ -8,16 +8,12 @@ import time
 def main():
     load_dotenv()
     parser = argparse.ArgumentParser(description="Программа загружает фотографии в телеграм")
-    parser.add_argument("--path", help="Путь к папке, откуда брать изображения. Оставьте пустым, чтобы изображения выбирались случайно")
+    parser.add_argument("--path", help="Путь к папке, откуда брать изображения. Оставьте пустым, чтобы изображения выбирались случайно", default=f"{random.choice(os.listdir('images'))}")
     args = parser.parse_args()
     bot = telegram.Bot(token=os.environ["BOT_TOKEN"])
     delay = int(os.environ["PUBLICATION_DELAY"]) * 3600
     while True:
-        if args.path:
-            path = f"images/{args.path}"
-        else:
-            path = f"images/{random.choice(os.listdir('images'))}"
-
+        path = f"images/{args.path}"
         images = os.listdir(path)
         random.shuffle(images)
         for image in images:
