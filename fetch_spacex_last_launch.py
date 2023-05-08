@@ -1,6 +1,6 @@
 import argparse
 import requests
-from image_saver import path_direction
+from image_saver import save_to
 
 def main():
     parser = argparse.ArgumentParser(description="Программа загружает фотографии с запуска ракет")
@@ -10,7 +10,7 @@ def main():
     url = f"https://api.spacexdata.com/v5/launches/{args.id}"
     response = requests.get(url)
     for image in response.json()["links"]["flickr"]["original"]:
-        path_direction(image, args.path)
+        save_to(image, args.path)
 
 if __name__ == "__main__":
     main()

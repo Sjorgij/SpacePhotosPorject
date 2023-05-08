@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import argparse
 import requests
 import os
-from image_saver import path_direction
+from image_saver import save_to
 
 def main():
     parser = argparse.ArgumentParser(description="Программа загружает фотографии Земли из космоса")
@@ -21,7 +21,7 @@ def main():
         }
         url = f"{image_info['url']}/{image_info['date']}/png/{image_info['name']}"
         url = requests.get(url, params = params).url
-        path_direction(url, args.path)
+        save_to(url, args.path)
 
 if __name__ == "__main__":
     load_dotenv()

@@ -11,7 +11,7 @@ def file_format(image_link):
     }
     return image
 
-def path_direction(url_request, path):
+def save_to(url_request, path):
     pathlib.Path(path).mkdir(parents=True, exist_ok=True)
     response = requests.get(url_request)
     response.raise_for_status()
