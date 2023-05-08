@@ -13,6 +13,7 @@ def main():
         "api_key": os.environ["NASA_TOKEN"]  
     }
     response = requests.get(f"{url}/images", params = params)
+    response.raise_for_status()
     for image in response.json():
         image_info = {
             "url": "https://api.nasa.gov/EPIC/archive/natural",

@@ -15,6 +15,7 @@ def main():
         "count": args.count
     }
     response = requests.get(url, params = params)
+    response.raise_for_status()
     for image_url in response.json():
         save_to(image_url["url"], args.path)
 
