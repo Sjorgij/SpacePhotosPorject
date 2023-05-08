@@ -5,6 +5,7 @@ import os
 from image_saver import save_to
 
 def main():
+    load_dotenv()
     parser = argparse.ArgumentParser(description="Программа загружает фотографии космоса")
     parser.add_argument("count", help="Количество фотографий", type=int)
     parser.add_argument("path", help="Путь к папке, куда сохранить изображения")
@@ -20,5 +21,4 @@ def main():
         save_to(image_url["url"], args.path)
 
 if __name__ == "__main__":
-    load_dotenv()
     main()
