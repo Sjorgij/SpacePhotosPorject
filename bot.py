@@ -14,6 +14,7 @@ def main():
     args = parser.parse_args()
     bot = telegram.Bot(token=os.environ["BOT_TOKEN"])
     delay = int(os.environ["PUBLICATION_DELAY"]) * 3600
+    chat_id = os.environ["CHAT_ID"]
     while True:
         path = f"images/{args.path}"
         images = os.listdir(path)
@@ -22,8 +23,8 @@ def main():
             image = f"{path}/{image}"
             if os.stat(image).st_size >= FILE_MAX_SIZE_IN_BYTES:
                 continue
-            bot.send_message(chat_id=os.environ["CHAT_ID"], text="Посмотрите, как прекрасен космос!")
-            bot.send_document(chat_id=os.environ["CHAT_ID"], document=open(image, "rb"))
+            bot.send_message(chat_id=chat_id, text="Посмотрите, как прекрасен космос!")
+            bot.send_document(chat_id=chat_id, document=open(image, "rb"))
             time.sleep(delay)
 
 if __name__ == "__main__":
