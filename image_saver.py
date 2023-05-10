@@ -4,7 +4,9 @@ import pathlib
 import os
 
 def get_file_name_format(image_link):
-    name_ext = os.path.splitext(os.path.split(urllib.parse.urlsplit(image_link).path)[1])
+    image_path = urllib.parse.urlsplit(image_link).path
+    image = os.path.split(image_path)[1]
+    name_ext = os.path.splitext(image)
     image = {
       "name": urllib.parse.unquote(name_ext[0]),
       "format": name_ext[1]
