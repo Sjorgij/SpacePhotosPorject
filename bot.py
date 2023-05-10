@@ -10,7 +10,7 @@ FILE_MAX_SIZE_IN_BYTES = 20 * 1024**2
 def main():
     load_dotenv()
     parser = argparse.ArgumentParser(description="Программа загружает фотографии в телеграм")
-    parser.add_argument("--path", help="Путь к папке, откуда брать изображения. Оставьте пустым, чтобы изображения выбирались случайно", default=f"{random.choice(os.listdir('images'))}")
+    parser.add_argument("--path", help = "Путь к папке, откуда брать изображения. Оставьте пустым, чтобы изображения выбирались случайно", default = f"{random.choice(os.listdir('images'))}")
     args = parser.parse_args()
     bot = telegram.Bot(token=os.environ["BOT_TOKEN"])
     delay = int(os.environ["PUBLICATION_DELAY"]) * 3600
