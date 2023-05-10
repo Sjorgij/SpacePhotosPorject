@@ -17,7 +17,7 @@ def save_to(url_request, path):
     pathlib.Path(path).mkdir(parents=True, exist_ok=True)
     response = requests.get(url_request)
     response.raise_for_status()
-    image =  get_file_name_format(response.url)
-    filename = f"images/{path}/{image['name']}{image['format']}"
+    name, ext =  get_file_name_format(response.url).values()
+    filename = f"images/{path}/{name}{ext}"
     with open(filename, "wb") as file:
         file.write(response.content)
